@@ -37,7 +37,7 @@ void buzzer_init()
 
   P2SEL |= BIT6;
 
-  //buzzer_update();
+  P2DIR = BIT6;
 
 }
 
@@ -55,36 +55,34 @@ void buzzer_set_period(short cycles) /* buzzer clock = 2MHz.  (period of 1k resu
 
 void buzzer_update()
 {
-  if(switch2_state_down)
-    {
-     P2DIR = BIT6;
-    }
+
+  if(switch2_state_changed)
+  {
+
+    buzzer_siren();
+
+  }
+
+}
+
+void buzzer_siren()
+{
      
      switch(song)
      {
      case 0:
-       buzzer_set_period(700);
+       buzzer_set_period(1000);
+       switch1_state_down = 0;
+       state_advance();
        song++;
        break;
      case 1:
-       buzzer_set_period(500);
-       song++;
-       break;
-     case 2:
        buzzer_set_period(700);
-       song++;
-       break;
-     case 3:
-       buzzer_set_period(500);
-       song++;
-       break;
-     case 4:
-       buzzer_set_period(700);
+       switch1_state_down = 1;
+       state_advance();
        song = 0;
        break;
      }
-     
-  switch2_state_changed = 0;
   
 }
 
@@ -94,6 +92,7 @@ void buzzer_off(){
     {
       
       buzzer_set_period(0);
+      switch2_state_changed = 0;
 
     }
   

@@ -83,6 +83,14 @@ switch_interrupt_handler()
 
   }
 
+  if(switch3_state_down)
+  {
+    switch3_state_changed = 1;
+
+    
+
+  }
+
   if(switch4_state_down){
 
     switch4_state_changed = 1;

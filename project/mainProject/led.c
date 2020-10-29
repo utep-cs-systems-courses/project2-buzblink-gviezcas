@@ -36,8 +36,6 @@ void led_update()
 
 {
 
-  if (switch1_state_changed) {
-
     char ledFlags = 0;
 
     ledFlags |= switch1_state_down ? LED_GREEN : 0;
@@ -47,6 +45,4 @@ void led_update()
 
     P1OUT |= ledFlags;     // set bit for on leds
 
-  }
-  switch1_state_changed = 0;
 }
