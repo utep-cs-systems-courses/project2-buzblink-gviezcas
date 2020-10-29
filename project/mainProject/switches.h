@@ -12,7 +12,7 @@
 
 #define SW4 BIT3/*switch4 is p2.3*/
 
-#define SWITCHES (BIT0 | BIT1 | BIT2 | BIT3)/* only 1 switch on this board */
+#define SWITCHES (BIT0 | BIT1 | BIT2 | BIT3)
 
 
 

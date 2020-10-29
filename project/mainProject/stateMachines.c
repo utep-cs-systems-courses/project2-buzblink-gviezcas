@@ -58,3 +58,10 @@ void state_advance()
   led_update();
 
 }
+
+void buzzer_state()
+{
+  
+  buzzer_update();
+
+}

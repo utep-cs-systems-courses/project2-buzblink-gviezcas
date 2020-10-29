@@ -11,6 +11,7 @@ void
 __interrupt_vec(WDT_VECTOR) WDT(){/* 250 interrupts/sec */
 
   static char blink_count = 0;
+  static char buzzer_count = 0;
 
   if (++blink_count == 125) {
 
@@ -20,9 +21,16 @@ __interrupt_vec(WDT_VECTOR) WDT(){/* 250 interrupts/sec */
 
   }
 
-}
+  if(++buzzer_count == 50)
+  {
+    
+    buzzer_update();
 
-/* Switch on P1 (S2) */
+    buzzer_count = 0;
+
+  }
+
+}
 
 void
 

@@ -6,7 +6,8 @@
 
 #include "buzzer.h"
 
-char switch2_state_changed;
+char switch2_state_changed, switch4_state_changed;
+char song = 0;
 
 
 
@@ -35,8 +36,8 @@ void buzzer_init()
   P2SEL &= ~BIT7;
 
   P2SEL |= BIT6;
-    
-  buzzer_update();
+
+  //buzzer_update();
 
 }
 
@@ -52,16 +53,49 @@ void buzzer_set_period(short cycles) /* buzzer clock = 2MHz.  (period of 1k resu
   
 }
 
-void buzzer_update(){
-  
-  if(switch2_state_changed){
-    
-    P2DIR = BIT6;
-    
-    buzzer_set_period(4000);
-    
-  }
-
+void buzzer_update()
+{
+  if(switch2_state_down)
+    {
+     P2DIR = BIT6;
+    }
+     
+     switch(song)
+     {
+     case 0:
+       buzzer_set_period(700);
+       song++;
+       break;
+     case 1:
+       buzzer_set_period(500);
+       song++;
+       break;
+     case 2:
+       buzzer_set_period(700);
+       song++;
+       break;
+     case 3:
+       buzzer_set_period(500);
+       song++;
+       break;
+     case 4:
+       buzzer_set_period(700);
+       song = 0;
+       break;
+     }
+     
   switch2_state_changed = 0;
   
+}
+
+void buzzer_off(){
+
+  if(switch4_state_down)
+    {
+      
+      buzzer_set_period(0);
+
+    }
+  
+  switch4_state_changed = 0;
 }

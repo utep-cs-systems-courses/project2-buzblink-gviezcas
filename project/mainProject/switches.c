@@ -6,6 +6,8 @@
 
 #include "buzzer.h"
 
+#include "stateMachines.h"
+
 
 
 char switch1_state_down, switch1_state_changed, switch2_state_down, switch2_state_changed, switch3_state_down, switch3_state_changed, switch4_state_down, switch4_state_changed; /* effectively boolean */
@@ -65,22 +67,27 @@ switch_interrupt_handler()
   switch3_state_down = (p2val & SW3) ? 0 : 1;
   switch4_state_down = (p2val & SW4) ? 0 : 1;
 
-  if(switch1_state_down){
+  if(switch1_state_down || !switch1_state_down){
 
-  switch1_state_changed = 1;
+    switch1_state_changed = 1;
 
-  led_update();
+    state_advance();
   
   }
-  switch1_state_changed = 1;
-  
-  led_update();
 
   if(switch2_state_down){
 
-  switch2_state_changed = 1;
+    switch2_state_changed = 1;
 
-  buzzer_update();
+    buzzer_update();
+
+  }
+
+  if(switch4_state_down){
+
+    switch4_state_changed = 1;
+
+    buzzer_off();
 
   }
 
