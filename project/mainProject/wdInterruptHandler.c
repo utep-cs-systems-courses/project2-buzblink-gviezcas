@@ -4,6 +4,8 @@
 
 #include "switches.h"
 
+char blink_dim = 125;
+
 
 
 void
@@ -13,9 +15,11 @@ __interrupt_vec(WDT_VECTOR) WDT(){/* 250 interrupts/sec */
   static char blink_count = 0;
   static char buzzer_count = 0;
 
-  if (++blink_count == 125) {
-
+  if (++blink_count == blink_dim){
+    
     state_advance();
+
+    state_dim();
 
     blink_count = 0;
 
@@ -31,6 +35,7 @@ __interrupt_vec(WDT_VECTOR) WDT(){/* 250 interrupts/sec */
   }
 
 }
+
 
 void
 

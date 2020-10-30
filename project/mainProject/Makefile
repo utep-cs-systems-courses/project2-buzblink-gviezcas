@@ -43,6 +43,6 @@ led.o: led.c led.h
 
 wdInterruptHandler.o: stateMachines.h
 
-stateMachines.o: led.h stateMachines.h
+stateMachines.o: led.h stateMachines.h wdInterruptHandler.c
 
 buzzer.o: buzzer.h switches.h

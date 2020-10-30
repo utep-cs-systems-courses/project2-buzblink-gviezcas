@@ -6,6 +6,8 @@
 
 void state_advance();
 
+void state_dim();
+
 
 
 #endif // included

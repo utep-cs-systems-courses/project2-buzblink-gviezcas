@@ -87,7 +87,7 @@ switch_interrupt_handler()
   {
     switch3_state_changed = 1;
 
-    
+    state_dim();
 
   }
 
