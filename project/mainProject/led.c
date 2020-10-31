@@ -34,15 +34,35 @@ void led_init()
 
 void led_update()
 
-{
-
+{ 
+  
     char ledFlags = 0;
 
     ledFlags |= switch1_state_down ? LED_GREEN : 0;
 
     ledFlags |= switch1_state_down ? 0 : LED_RED;
+    
     P1OUT &= (0xff - LEDS) | ledFlags; // clear bit for off leds
 
     P1OUT |= ledFlags;     // set bit for on leds
+    
+}
 
+void led_dim()
+{
+  
+  if (led_changed) {
+
+    char ledFlags = redVal[red_on];
+
+
+
+    P1OUT &= (0xff^LEDS) | ledFlags; // clear bit for off leds
+
+    P1OUT |= ledFlags;     // set bit for on leds
+
+    led_changed = 0;
+
+  }
+  
 }

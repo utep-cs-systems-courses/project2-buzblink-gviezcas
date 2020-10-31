@@ -4,7 +4,11 @@
 
 #include "switches.h"
 
-char blink_dim = 125;
+#include "buzzer.h"
+
+#include "led.h"
+
+char blink_dim = 0;
 
 
 
@@ -14,12 +18,11 @@ __interrupt_vec(WDT_VECTOR) WDT(){/* 250 interrupts/sec */
 
   static char blink_count = 0;
   static char buzzer_count = 0;
+  static char dim_count = 0;
 
-  if (++blink_count == blink_dim){
+  if (++blink_count == 125){
     
     state_advance();
-
-    state_dim();
 
     blink_count = 0;
 
@@ -31,6 +34,22 @@ __interrupt_vec(WDT_VECTOR) WDT(){/* 250 interrupts/sec */
     buzzer_update();
 
     buzzer_count = 0;
+
+  }
+
+  if(++dim_count == blink_dim)
+  {
+    if(switch3_state_down)
+    { 
+      led_changed = toggle_red();
+      led_dim();
+      
+      state_dim();
+      
+    }
+    
+    dim_count = 0;
+    
 
   }
 

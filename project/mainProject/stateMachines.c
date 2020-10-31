@@ -6,6 +6,8 @@
 
 #include "switches.h"
 
+#include "buzzer.h"
+
 
 char dim = 0, switch3_state_changed;
 
@@ -46,7 +48,37 @@ char toggle()
 }
 
 
+char toggle_red()/* always toggle! */
 
+{
+
+  static char state = 0;
+
+
+
+  switch (state) {
+
+  case 0:
+
+    red_on = 1;
+
+    state = 1;
+
+    break;
+
+  case 1:
+
+    red_on = 0;
+
+    state = 0;
+
+    break;
+
+  }
+
+  return 1;/* always changes an led */
+
+}
 
 
 void state_advance()
@@ -66,40 +98,37 @@ void state_advance()
 
 void state_dim()
 {
-
- if(switch3_state_down)
- {
-      
+       
   switch(dim)
   {
 
    case 0:
 	
-     blink_dim = 0;
-	
+     blink_dim = 1;
+
      dim++;
 	
      break;
 	
   case 1:
 	
-    blink_dim = 1;
-	
+    blink_dim = 2;
+
     dim++;
 	
     break;
 	
   case 2:
     
-    blink_dim = 2;
-    
+    blink_dim = 3;
+
     dim++;
     
     break;
     
   case 3:
     
-    blink_dim = 3;
+    blink_dim = 4;
       
     dim++;
       
@@ -107,24 +136,16 @@ void state_dim()
     
   case 4:
     
-    blink_dim = 4;
-    
-    dim++;
-    
-    break;
-    
-  case 5:
-    
-    blink_dim = 125;
+    blink_dim = 5;
     
     dim = 0;
     
     break;
     
+  default:
+    
+    buzzer_set_period(1000);
+    
   }
   
- }
- 
- switch3_state_changed = 0;
-
 }

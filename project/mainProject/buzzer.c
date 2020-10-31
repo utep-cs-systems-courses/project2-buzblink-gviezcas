@@ -9,6 +9,8 @@
 char switch2_state_changed, switch4_state_changed;
 char song = 0;
 
+extern char blink_dim;
+
 
 
 void buzzer_init()
@@ -93,6 +95,7 @@ void buzzer_off(){
       
       buzzer_set_period(0);
       switch2_state_changed = 0;
+      blink_dim = 125;
 
     }
   
