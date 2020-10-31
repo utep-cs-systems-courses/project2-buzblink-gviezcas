@@ -9,10 +9,11 @@
 #include "buzzer.h"
 
 
-char dim = 0, switch3_state_changed;
+char dim = 0, switch2_state_changed, switch4_state_changed, song;
 
 extern char blink_dim;
 
+/*Toggles between the Red and Green LEDs*/
 char toggle()
 
 {
@@ -47,7 +48,7 @@ char toggle()
 
 }
 
-
+/*Toggles the red LED on and off.*/
 char toggle_red()/* always toggle! */
 
 {
@@ -80,7 +81,7 @@ char toggle_red()/* always toggle! */
 
 }
 
-
+/*Advances the state to toggle the LEDs from red to green.*/
 void state_advance()
 {
 
@@ -96,6 +97,7 @@ void state_advance()
 
 }
 
+/*Changes the blink count in the Interrupt Handler to change the brightness of the red LED.*/
 void state_dim()
 {
        
@@ -148,4 +150,57 @@ void state_dim()
     
   }
   
+}
+
+/*Toggles between different buzzer pitches and both LEDs to create a siren.*/
+void state_siren()
+{
+
+  switch(song)
+  {
+
+  case 0:
+    
+    buzzer_set_period(1000);
+
+    switch1_state_down = 0;//LEDs rely on switch1, so need to change the state without pressing.
+
+    state_advance();
+
+    song++;
+
+    break;
+
+  case 1:
+    
+    buzzer_set_period(700);
+
+    switch1_state_down = 1;
+
+    state_advance();
+
+    song = 0;
+
+    break;
+    
+
+  }
+
+}
+
+/*Turns off the buzzer, siren and sets the brightness of the red LED back to default.*/
+void state_off()
+{
+
+  if(switch4_state_down)
+  {
+
+    buzzer_set_period(0);
+    switch2_state_changed = 0;
+    blink_dim = 125;
+
+  }
+
+  switch4_state_changed = 0;
+
 }

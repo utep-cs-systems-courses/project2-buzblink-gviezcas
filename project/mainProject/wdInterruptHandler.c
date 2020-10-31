@@ -8,7 +8,7 @@
 
 #include "led.h"
 
-char blink_dim = 0;
+char blink_dim = 0;//Global variable to change brightness of LED.
 
 
 
@@ -20,6 +20,7 @@ __interrupt_vec(WDT_VECTOR) WDT(){/* 250 interrupts/sec */
   static char buzzer_count = 0;
   static char dim_count = 0;
 
+  /*Interrupt handler to toggle for switch 1.*/
   if (++blink_count == 125){
     
     state_advance();
@@ -28,6 +29,7 @@ __interrupt_vec(WDT_VECTOR) WDT(){/* 250 interrupts/sec */
 
   }
 
+  /*Interrupt handler to handle the siren for switch 2.*/
   if(++buzzer_count == 50)
   {
     
@@ -37,6 +39,7 @@ __interrupt_vec(WDT_VECTOR) WDT(){/* 250 interrupts/sec */
 
   }
 
+  /*Interrupt handler to change brightness of red LED for switch 3.*/
   if(++dim_count == blink_dim)
   {
     if(switch3_state_down)

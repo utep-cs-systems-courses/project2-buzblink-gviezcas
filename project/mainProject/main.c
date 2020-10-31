@@ -16,9 +16,9 @@ int main(void) {
 
   configureClocks();/* setup master oscillator, CPU & peripheral clocks */
 
-  switch_init();
-  led_init();
-  buzzer_init();
+  switch_init(); //Initializes the switches.
+  led_init();    //Initializes the LEDs.
+  buzzer_init(); //Initializes the buzzer.
 
   enableWDTInterrupts();/* enable periodic interrupt */
 

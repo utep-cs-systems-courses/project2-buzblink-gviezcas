@@ -31,16 +31,16 @@ void led_init()
 }
 
 
-
+/*Updates the LED from red to green.*/
 void led_update()
 
 { 
   
     char ledFlags = 0;
 
-    ledFlags |= switch1_state_down ? LED_GREEN : 0;
+    ledFlags |= switch1_state_down ? LED_GREEN : 0;// When switch 1 is down turn on green.
 
-    ledFlags |= switch1_state_down ? 0 : LED_RED;
+    ledFlags |= switch1_state_down ? 0 : LED_RED;// When switch 1 is up turn on red.
     
     P1OUT &= (0xff - LEDS) | ledFlags; // clear bit for off leds
 
@@ -48,6 +48,7 @@ void led_update()
     
 }
 
+/*Sets bits for red LED to be on and off*/
 void led_dim()
 {
   

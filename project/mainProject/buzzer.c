@@ -6,12 +6,9 @@
 
 #include "buzzer.h"
 
-char switch2_state_changed, switch4_state_changed;
-char song = 0;
+#include "stateMachines.h"
 
-extern char blink_dim;
-
-
+char song = 0, switch2_state_changed;
 
 void buzzer_init()
 
@@ -55,49 +52,14 @@ void buzzer_set_period(short cycles) /* buzzer clock = 2MHz.  (period of 1k resu
   
 }
 
-void buzzer_update()
+void buzzer_update()/*Waits for switch 2 to change states to start the siren.*/
 {
 
   if(switch2_state_changed)
   {
 
-    buzzer_siren();
+    state_siren();
 
   }
 
-}
-
-void buzzer_siren()
-{
-     
-     switch(song)
-     {
-     case 0:
-       buzzer_set_period(1000);
-       switch1_state_down = 0;
-       state_advance();
-       song++;
-       break;
-     case 1:
-       buzzer_set_period(700);
-       switch1_state_down = 1;
-       state_advance();
-       song = 0;
-       break;
-     }
-  
-}
-
-void buzzer_off(){
-
-  if(switch4_state_down)
-    {
-      
-      buzzer_set_period(0);
-      switch2_state_changed = 0;
-      blink_dim = 125;
-
-    }
-  
-  switch4_state_changed = 0;
 }
